@@ -13,6 +13,7 @@ import {
 } from "react-native";
 
 import Greet from "./components/Greet";
+import Box from "./components/Box";
 
 export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -30,6 +31,7 @@ export default function App() {
 
   return (
     <View style={appStyles.container}>
+      <Box />
       <StatusBar backgroundColor="lightgreen" />
       <ActivityIndicator
         style={appStyles.loadingIndicator}

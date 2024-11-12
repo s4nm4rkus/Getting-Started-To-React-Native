@@ -46,4 +46,4 @@ const appStyles = StyleSheet.create({
   },
 });
 
-export default styles;
+export default appStyles;

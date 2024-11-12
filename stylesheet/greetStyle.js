@@ -11,4 +11,4 @@ const greetStyles = StyleSheet.create({
   },
 });
 
-export default styles;
+export default greetStyles;
