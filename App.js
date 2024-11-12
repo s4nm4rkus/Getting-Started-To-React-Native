@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import appStyles from "./stylesheet/appStyle";
 import {
   View,
   Text,
@@ -10,6 +11,8 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
+
+import Greet from "./components/Greet";
 
 export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,16 +29,16 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={appStyles.container}>
       <StatusBar backgroundColor="lightgreen" />
       <ActivityIndicator
-        style={styles.loadingIndicator}
+        style={appStyles.loadingIndicator}
         size={"large"}
         color={"black"}
         animating={isActivityIndicatorlVisible}
       />
       <TouchableOpacity
-        style={styles.button}
+        style={appStyles.button}
         onPress={() =>
           Alert.alert("Warning!", "Do you want to open this Modal?", [
             {
@@ -53,7 +56,7 @@ export default function App() {
         onLongPress={() => console.log("Button Long Pressed")}
         activeOpacity={0.7}
       >
-        <Text style={styles.buttonText}>Open Modal</Text>
+        <Text style={appStyles.buttonText}>Open Modal</Text>
       </TouchableOpacity>
 
       <Modal
@@ -62,9 +65,10 @@ export default function App() {
         presentationStyle="pageSheet"
         onRequestClose={() => setIsModalVisible(false)}
       >
-        <View style={styles.modalView}>
-          <Text style={styles.modalContent}>Modal Content</Text>
-          <View style={styles.closeModal}>
+        <View style={appStyles.modalView}>
+          <Text style={appStyles.modalContent}>Modal Content</Text>
+          <Greet name="Bruce Wayne" />
+          <View style={appStyles.closeModal}>
             <Button
               title="Close"
               color="white"
@@ -79,49 +83,3 @@ export default function App() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "plum",
-    padding: 60,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    backgroundColor: "midnightblue",
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    textAlign: "center",
-  },
-  modalView: {
-    justifyContent: "center",
-    backgroundColor: "lightblue",
-    padding: 60,
-    flex: 1,
-  },
-
-  modalContent: {
-    padding: 60,
-    alignContent: "center",
-    fontSize: 16,
-    textAlign: "center",
-    justifyContent: "center",
-  },
-  closeModal: {
-    fontSize: 16,
-    backgroundColor: "midnightblue",
-    padding: 10,
-    borderRadius: 5,
-    width: 100,
-    alignSelf: "center",
-  },
-  loadingIndicator: {
-    margin: 20,
-  },
-});
