@@ -6,29 +6,72 @@ import {
   StyleSheet,
   Modal,
   Button,
+  StatusBar,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 
 export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isActivityIndicatorlVisible, setIsActivityIndicatorlVisible] =
+    useState(false);
+
+  const handleOpenModalWithDelay = () => {
+    setIsActivityIndicatorlVisible(true);
+
+    setTimeout(() => {
+      setIsActivityIndicatorlVisible(false);
+      setIsModalVisible(true);
+    }, 500);
+  };
+
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="lightgreen" />
+      <ActivityIndicator
+        style={styles.loadingIndicator}
+        size={"large"}
+        color={"black"}
+        animating={isActivityIndicatorlVisible}
+      />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => setIsModalVisible(true)}
+        onPress={() =>
+          Alert.alert("Warning!", "Do you want to open this Modal?", [
+            {
+              text: "Proceed",
+              onPress: () => {
+                handleOpenModalWithDelay();
+              },
+            },
+            {
+              text: "Cancel",
+            },
+          ])
+        }
+        // onPress={}
         onLongPress={() => console.log("Button Long Pressed")}
         activeOpacity={0.7}
       >
         <Text style={styles.buttonText}>Open Modal</Text>
       </TouchableOpacity>
 
-      <Modal visible={isModalVisible}>
+      <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setIsModalVisible(false)}
+      >
         <View style={styles.modalView}>
           <Text style={styles.modalContent}>Modal Content</Text>
           <View style={styles.closeModal}>
             <Button
               title="Close"
               color="white"
-              onPress={() => setIsModalVisible(false)}
+              onPress={() => {
+                setIsModalVisible(false);
+                setIsActivityIndicatorlVisible(false);
+              }}
             />
           </View>
         </View>
@@ -77,5 +120,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 100,
     alignSelf: "center",
+  },
+  loadingIndicator: {
+    margin: 20,
   },
 });
