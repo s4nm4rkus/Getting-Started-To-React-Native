@@ -1,24 +1,13 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const boxStyles = StyleSheet.create({
   box1: {
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 300,
     paddingHorizontal: 20,
     paddingVertical: 10,
     margin: 10,
     backgroundColor: "lightblue",
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  box2: {
-    width: 200,
-    height: 200,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    margin: 10,
-    backgroundColor: "lightgreen",
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",

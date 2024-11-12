@@ -10,6 +10,7 @@ import {
   StatusBar,
   ActivityIndicator,
   Alert,
+  SafeAreaView,
 } from "react-native";
 
 import Greet from "./components/Greet";
@@ -30,58 +31,59 @@ export default function App() {
   };
 
   return (
-    <View style={appStyles.container}>
-      <Box />
-      <StatusBar backgroundColor="lightgreen" />
-      <ActivityIndicator
-        style={appStyles.loadingIndicator}
-        size={"large"}
-        color={"black"}
-        animating={isActivityIndicatorlVisible}
-      />
-      <TouchableOpacity
-        style={appStyles.button}
-        onPress={() =>
-          Alert.alert("Warning!", "Do you want to open this Modal?", [
-            {
-              text: "Proceed",
-              onPress: () => {
-                handleOpenModalWithDelay();
+    <SafeAreaView style={appStyles.safeContainer}>
+      <View style={appStyles.container}>
+        <Box />
+        <ActivityIndicator
+          style={appStyles.loadingIndicator}
+          size={"large"}
+          color={"black"}
+          animating={isActivityIndicatorlVisible}
+        />
+        <TouchableOpacity
+          style={appStyles.button}
+          onPress={() =>
+            Alert.alert("Warning!", "Do you want to open this Modal?", [
+              {
+                text: "Proceed",
+                onPress: () => {
+                  handleOpenModalWithDelay();
+                },
               },
-            },
-            {
-              text: "Cancel",
-            },
-          ])
-        }
-        // onPress={}
-        onLongPress={() => console.log("Button Long Pressed")}
-        activeOpacity={0.7}
-      >
-        <Text style={appStyles.buttonText}>Open Modal</Text>
-      </TouchableOpacity>
+              {
+                text: "Cancel",
+              },
+            ])
+          }
+          // onPress={}
+          onLongPress={() => console.log("Button Long Pressed")}
+          activeOpacity={0.7}
+        >
+          <Text style={appStyles.buttonText}>Open Modal</Text>
+        </TouchableOpacity>
 
-      <Modal
-        visible={isModalVisible}
-        animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={() => setIsModalVisible(false)}
-      >
-        <View style={appStyles.modalView}>
-          <Text style={appStyles.modalContent}>Modal Content</Text>
-          <Greet name="Bruce Wayne" />
-          <View style={appStyles.closeModal}>
-            <Button
-              title="Close"
-              color="white"
-              onPress={() => {
-                setIsModalVisible(false);
-                setIsActivityIndicatorlVisible(false);
-              }}
-            />
+        <Modal
+          visible={isModalVisible}
+          animationType="slide"
+          presentationStyle="pageSheet"
+          onRequestClose={() => setIsModalVisible(false)}
+        >
+          <View style={appStyles.modalView}>
+            <Text style={appStyles.modalContent}>Modal Content</Text>
+            <Greet name="Bruce Wayne" />
+            <View style={appStyles.closeModal}>
+              <Button
+                title="Close"
+                color="white"
+                onPress={() => {
+                  setIsModalVisible(false);
+                  setIsActivityIndicatorlVisible(false);
+                }}
+              />
+            </View>
           </View>
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </SafeAreaView>
   );
 }

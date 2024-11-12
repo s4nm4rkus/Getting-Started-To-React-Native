@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 
 const appStyles = StyleSheet.create({
+  safeContainer: {
+    flex: 1,
+    backgroundColor: "plum",
+  },
   container: {
     flex: 1,
     backgroundColor: "plum",
@@ -42,7 +46,7 @@ const appStyles = StyleSheet.create({
     alignSelf: "center",
   },
   loadingIndicator: {
-    margin: 20,
+    margin: 10,
   },
 });
 

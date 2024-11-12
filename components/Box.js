@@ -5,7 +5,7 @@ export default function Box() {
   return (
     <View>
       <View style={[boxStyles.box1, boxStyles.boxShadow]}>
-        <Text style={boxStyles.boxText}>Box 1</Text>
+        <Text style={boxStyles.boxText}>Welcome!</Text>
       </View>
     </View>
   );
