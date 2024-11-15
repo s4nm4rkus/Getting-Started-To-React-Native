@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   View,
   TextInput,
@@ -73,11 +72,14 @@ export default function UserInput({
       <View style={shadowBoxStyle.buttonShadow}>
         <TouchableOpacity
           style={appStyles.button}
+          onLongPress={handleOpenModalWithDelay}
           onPress={() =>
             Alert.alert("Warning!", "Do you want to open this Modal?", [
               {
                 text: "Proceed",
                 onPress: handleSubmit,
+                // onPress: handleOpenModalWithDelay,
+                // handleSubmit,
               },
               {
                 text: "Cancel",

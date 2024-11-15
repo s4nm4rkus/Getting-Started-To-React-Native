@@ -26,14 +26,12 @@ const appStyles = StyleSheet.create({
     textAlign: "center",
   },
   modalView: {
-    justifyContent: "center",
     backgroundColor: "lightblue",
-    padding: 60,
+    padding: 20,
     flex: 1,
   },
 
   modalContent: {
-    padding: 20,
     alignContent: "center",
     fontSize: 16,
     textAlign: "center",

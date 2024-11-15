@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ import Greet from "./components/modals/Greet";
 
 export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [postList, setPostList] = useState([]);
   const [errors, setErrors] = useState({});
   const [isActivityIndicatorlVisible, setIsActivityIndicatorlVisible] =
     useState(false);
@@ -84,6 +85,22 @@ export default function App() {
     }, 500);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+        );
+        const data = await response.json();
+        setPostList(data); // Correctly update the postList state
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <SafeAreaView style={appStyles.safeContainer}>
       <KeyboardAvoidingView
@@ -118,7 +135,7 @@ export default function App() {
             >
               <View style={appStyles.modalView}>
                 <Text style={appStyles.modalContent}>Modal Content</Text>
-                <Greet name="Bruce Wayne" />
+                <Greet name={"Bruce Wayne"} postList={postList} />
                 <View style={appStyles.closeModal}>
                   <Button
                     title="Close"
