@@ -12,16 +12,6 @@ const boxStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
-  boxShadow: {
-    shadowColor: "#444444",
-    shadowOffset: {
-      width: 1,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
   boxText: {
     fontSize: 24,
     textAlign: "center",

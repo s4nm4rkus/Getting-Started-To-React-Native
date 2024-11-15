@@ -5,9 +5,11 @@ const appStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "plum",
   },
+  scrollView: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: "plum",
     padding: 60,
     justifyContent: "center",
     alignItems: "center",
@@ -46,7 +48,17 @@ const appStyles = StyleSheet.create({
     alignSelf: "center",
   },
   loadingIndicator: {
-    margin: 10,
+    position: "absolute",
+    right: "50%",
+    left: "50%",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    marginBottom: 10,
+    fontWeight: "500",
+    textAlign: "left",
+    paddingHorizontal: 10,
   },
 });
 

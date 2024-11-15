@@ -1,29 +1,83 @@
 import React, { useState } from "react";
-import appStyles from "./stylesheet/appStyle";
 import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
   Modal,
   Button,
-  StatusBar,
   ActivityIndicator,
   Alert,
   SafeAreaView,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-
-import Greet from "./components/Greet";
-import Box from "./components/Box";
+import appStyles from "./stylesheet/appStyle";
+import textInputStyle from "./stylesheet/textInputStyle";
+import shadowBoxStyle from "./stylesheet/shadowBoxStyle";
+import Box from "./components/common/Box";
+import UserInput from "./components/inputs/userInputs";
+import Greet from "./components/modals/Greet";
 
 export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [errors, setErrors] = useState({});
   const [isActivityIndicatorlVisible, setIsActivityIndicatorlVisible] =
     useState(false);
 
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    password: "",
+  });
+
+  const validateForm = () => {
+    let errors = {};
+
+    if (!form.name) errors.name = "Name is required!";
+    if (!form.phone) errors.phone = "Phone No. is required!";
+    if (!form.email) errors.email = "Email Adress is required!";
+    if (!form.password) errors.password = "Password is required!";
+
+    setErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleInputChange = (field, value) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      [field]: value,
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [field]: "",
+    }));
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      console.log(
+        "Submitted",
+        form.name,
+        form.phone,
+        form.email,
+        form.password
+      );
+
+      setForm({
+        name: "",
+        phone: "",
+        email: "",
+        password: "",
+      });
+      setErrors({});
+    }
+  };
+
   const handleOpenModalWithDelay = () => {
     setIsActivityIndicatorlVisible(true);
-
     setTimeout(() => {
       setIsActivityIndicatorlVisible(false);
       setIsModalVisible(true);
@@ -32,58 +86,51 @@ export default function App() {
 
   return (
     <SafeAreaView style={appStyles.safeContainer}>
-      <View style={appStyles.container}>
-        <Box />
-        <ActivityIndicator
-          style={appStyles.loadingIndicator}
-          size={"large"}
-          color={"black"}
-          animating={isActivityIndicatorlVisible}
-        />
-        <TouchableOpacity
-          style={appStyles.button}
-          onPress={() =>
-            Alert.alert("Warning!", "Do you want to open this Modal?", [
-              {
-                text: "Proceed",
-                onPress: () => {
-                  handleOpenModalWithDelay();
-                },
-              },
-              {
-                text: "Cancel",
-              },
-            ])
-          }
-          // onPress={}
-          onLongPress={() => console.log("Button Long Pressed")}
-          activeOpacity={0.7}
-        >
-          <Text style={appStyles.buttonText}>Open Modal</Text>
-        </TouchableOpacity>
-
-        <Modal
-          visible={isModalVisible}
-          animationType="slide"
-          presentationStyle="pageSheet"
-          onRequestClose={() => setIsModalVisible(false)}
-        >
-          <View style={appStyles.modalView}>
-            <Text style={appStyles.modalContent}>Modal Content</Text>
-            <Greet name="Bruce Wayne" />
-            <View style={appStyles.closeModal}>
-              <Button
-                title="Close"
-                color="white"
-                onPress={() => {
-                  setIsModalVisible(false);
-                  setIsActivityIndicatorlVisible(false);
-                }}
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={20}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView keyboardShouldPersistTaps="handled">
+          <View style={appStyles.container}>
+            <Box />
+            <View style={[appStyles.loadingIndicator]}>
+              <ActivityIndicator
+                style={appStyles.loadingIndicator}
+                size="large"
+                color="black"
+                animating={isActivityIndicatorlVisible}
               />
             </View>
+
+            <UserInput
+              form={form}
+              errors={errors}
+              handleSubmit={handleSubmit}
+              handleInputChange={handleInputChange}
+              handleOpenModalWithDelay={handleOpenModalWithDelay}
+            />
+
+            <Modal
+              visible={isModalVisible}
+              animationType="slide"
+              presentationStyle="pageSheet"
+              onRequestClose={() => setIsModalVisible(false)}
+            >
+              <View style={appStyles.modalView}>
+                <Text style={appStyles.modalContent}>Modal Content</Text>
+                <Greet name="Bruce Wayne" />
+                <View style={appStyles.closeModal}>
+                  <Button
+                    title="Close"
+                    color="white"
+                    onPress={() => setIsModalVisible(false)}
+                  />
+                </View>
+              </View>
+            </Modal>
           </View>
-        </Modal>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
