@@ -1,3 +1,4 @@
+import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 
 const appStyles = StyleSheet.create({
@@ -57,6 +58,12 @@ const appStyles = StyleSheet.create({
     fontWeight: "500",
     textAlign: "left",
     paddingHorizontal: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

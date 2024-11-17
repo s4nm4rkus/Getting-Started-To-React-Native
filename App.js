@@ -23,6 +23,7 @@ export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [postList, setPostList] = useState([]);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const [isActivityIndicatorlVisible, setIsActivityIndicatorlVisible] =
     useState(false);
 
@@ -79,9 +80,11 @@ export default function App() {
 
   const handleOpenModalWithDelay = () => {
     setIsActivityIndicatorlVisible(true);
+    setIsLoading(true);
     setTimeout(() => {
       setIsActivityIndicatorlVisible(false);
       setIsModalVisible(true);
+      setIsLoading(false);
     }, 500);
   };
 
@@ -93,6 +96,7 @@ export default function App() {
         );
         const data = await response.json();
         setPostList(data); // Correctly update the postList state
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -100,6 +104,15 @@ export default function App() {
 
     fetchData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <SafeAreaView style={appStyles.loadingContainer}>
+        <ActivityIndicator size="large" color="red" />
+        <Text>Loading...</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={appStyles.safeContainer}>
@@ -110,14 +123,14 @@ export default function App() {
         <ScrollView keyboardShouldPersistTaps="handled">
           <View style={appStyles.container}>
             <Box />
-            <View style={[appStyles.loadingIndicator]}>
+            {/* <View style={[appStyles.loadingIndicator]}>
               <ActivityIndicator
                 style={appStyles.loadingIndicator}
                 size="large"
                 color="black"
                 animating={isActivityIndicatorlVisible}
               />
-            </View>
+            </View> */}
 
             <UserInput
               form={form}
@@ -135,7 +148,11 @@ export default function App() {
             >
               <View style={appStyles.modalView}>
                 <Text style={appStyles.modalContent}>Modal Content</Text>
-                <Greet name={"Bruce Wayne"} postList={postList} />
+                <Greet
+                  name={"Bruce Wayne"}
+                  postList={postList}
+                  setIsLoading={setIsLoading}
+                />
                 <View style={appStyles.closeModal}>
                   <Button
                     title="Close"

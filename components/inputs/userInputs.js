@@ -78,8 +78,6 @@ export default function UserInput({
               {
                 text: "Proceed",
                 onPress: handleSubmit,
-                // onPress: handleOpenModalWithDelay,
-                // handleSubmit,
               },
               {
                 text: "Cancel",
